@@ -13,3 +13,35 @@ straceを使って解析しましたが、
 
 * LED制御 (右目・左目)
 * サーボ制御 (1番〜8番)
+
+Python Library
+--------------
+
+```python
+import time
+from sota import Sota, SotaLED
+
+sota = Sota()
+
+# 右目を赤色、左目を青色、口を光らせる
+sota.set_led(SotaLED.Right, (0xff, 0x00, 0x00))
+sota.set_led(SotaLED.Left, (0x00, 0x00, 0xff))
+sota.set_led(SotaLED.Mouth, 0xff)
+
+# サーボONにし初期位置に移動
+sota.servo_on()
+
+# 体を左右に回転
+sota.set_servo({1: 1200})
+time.sleep(1)
+sota.set_servo({1: -1200})
+time.sleep(1)
+sota.set_servo({1: 0})
+time.sleep(1)
+
+# サーボOFF / LED OFF
+sota.servo_off()
+sota.set_led(SotaLED.Right, (0x00, 0x00, 0x00))
+sota.set_led(SotaLED.Left, (0x00, 0x00, 0x00))
+sota.set_led(SotaLED.Mouth, 0x00)
+```
